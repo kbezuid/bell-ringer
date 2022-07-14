@@ -1,9 +1,7 @@
 #include <ESP8266WiFi.h>
 
-const char* wifi_ssid = "KCBez";
-const char* wifi_password = "W@gw00rd1025";
-
-String httpHeader;
+const char* wifi_ssid = "BellRinger";
+const char* wifi_password = "RingMyBell";
 
 WiFiServer server(80);
 
@@ -11,22 +9,20 @@ String header;
 
 void setup() {
   Serial.begin(115200);
-
-  Serial.print("Connection to ");  
+  
+  Serial.print("Starting AP with SSID : ");
   Serial.println(wifi_ssid);
+  Serial.print("Password : ");
+  Serial.println(wifi_password);  
 
-  WiFi.begin(wifi_ssid, wifi_password);
+  WiFi.softAP(wifi_ssid, wifi_password);
+  delay(100);
 
-  while(WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print('.');
-  }
 
-  Serial.println("");
-  Serial.println("WiFi connected!");
-  Serial.print("IP Address: ");
+  Serial.print("AP IP Address : ");
+  Serial.println(WiFi.softAPIP());
   Serial.println(WiFi.localIP());
-  server.begin();  
+  server.begin();
 }
 
 void loop() {
